@@ -1,0 +1,4 @@
+
+twoGridFomulation/coarserGrid.C
+
+LIB = $(FOAM_USER_LIBBIN)/libcoarserGrid
