@@ -17,4 +17,4 @@ biomassCloudList/biomassCloudList.C
 
 
 
-LIB = $(FOAM_USER_LIBBIN)/libbiomassCombustion
+LIB = $(FOAM_USER_LIBBIN)/libbiomassCombustionCoupling

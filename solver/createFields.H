@@ -201,34 +201,6 @@ volScalarField Qdot
     dimensionedScalar("Qdot",dimEnergy/dimVolume/dimTime, 0.0)
 );
 
-volScalarField alphac
-(
-    IOobject
-    (
-        "alphac",
-        runTime.timeName(),
-        mesh,
-        IOobject::READ_IF_PRESENT,
-        IOobject::AUTO_WRITE
-    ),
-    mesh,
-    dimensionedScalar("alphac",dimless, 1.0)
-);
-
-volScalarField alphacavg
-(
-    IOobject
-    (
-        "alpha",
-        runTime.timeName(),
-        mesh,
-        IOobject::READ_IF_PRESENT,
-        IOobject::AUTO_WRITE
-    ),
-    alphac
-);
-
-
 // #include "createDpdt.H"
 Info<< "Creating field dpdt\n" << endl;
 volScalarField dpdt
@@ -263,6 +235,34 @@ if (Uc.nOldTimes())
 }
 
 #include "createMRF.H"
+
+volScalarField alphac
+(
+    IOobject
+    (
+        "alphac",
+        runTime.timeName(),
+        mesh,
+        IOobject::READ_IF_PRESENT,
+        IOobject::AUTO_WRITE
+    ),
+    mesh,
+    dimensionedScalar("alphac",dimless, 1.0)
+);
+
+volScalarField alphacavg
+(
+    IOobject
+    (
+        "alpha",
+        runTime.timeName(),
+        mesh,
+        IOobject::READ_IF_PRESENT,
+        IOobject::AUTO_WRITE
+    ),
+    alphac
+);
+
 
 #include "filter.H"
 
@@ -306,6 +306,8 @@ scalar alphacMin
 // Update alphac from the particle locations
 alphac = max(1.0 - bioCloud.theta(), alphacMin);
 alphac.correctBoundaryConditions();
+alphacavg.correctBoundaryConditions();
+
 
 surfaceScalarField alphacf("alphaf", fvc::interpolate(alphacavg));
 // Info<<"alphacf: "<<alphacf<<endl;

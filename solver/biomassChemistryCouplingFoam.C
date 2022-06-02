@@ -114,30 +114,40 @@ int main(int argc, char *argv[])
         alphacf = fvc::interpolate(alphacavg);
         alphaRhoPhic = alphacf*rhocPhic;
 
+        volScalarField::Internal averagedSrho = bioCloud.Srho();
+        fvScalarMatrix averagedSrhoRho = bioCloud.Srho(rhoc);
         fvVectorMatrix averagedSU = bioCloud.SU(Uc);
-        
         volScalarField& hee = thermo.he();
-
         fvScalarMatrix averagedSh = bioCloud.Sh(hee);
                 
         if (useTFMSource)
         {
+            
+            scalarField& averagedSrhoIninterFeildRef = averagedSrho;
+            averagedSrhoIninterFeildRef = TFM.averagedSource(averagedSrhoIninterFeildRef);
+            
+            scalarField& averagedSrhoRhoIninterFeildRef = averagedSrhoRho.source();
+            averagedSrhoRhoIninterFeildRef= TFM.averagedSource(averagedSrhoRhoIninterFeildRef);
+            
             vectorField& averagedSUIninterFeildRef = averagedSU.source();
             averagedSUIninterFeildRef= TFM.averagedSource(averagedSUIninterFeildRef); 
             
             scalarField& averagedShIninterFeildRef = averagedSh.source();
             averagedShIninterFeildRef = TFM.averagedSource(averagedShIninterFeildRef);
         }
+        
+        alphacavg = alphac;
 
         #include "rhocEqn.H"
-
+Info<<"alphacavg: "<<alphacavg <<endl;
         // --- Pressure-velocity PIMPLE corrector loop
         while (pimple.loop())
         {
             #include "UcEqn.H"
             #include "YEqn.H"
             #include "EEqn.H"
-
+Info<<"Uc: "<<Uc <<endl;
+Info<<"p: "<<p <<endl;
             // --- Pressure corrector loop
             while (pimple.correct())
             {

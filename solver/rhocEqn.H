@@ -35,7 +35,8 @@ Description
         fvm::ddt(alphacavg, rhoc)
       + fvc::div(alphaRhoPhic)
       ==
-        fvOptions(rhoc)
+        averagedSrhoRho
+      + fvOptions(rhoc)
     );
 
     rhocEqn.solve();

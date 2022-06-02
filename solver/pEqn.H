@@ -29,7 +29,8 @@ if (pimple.transonic())
           + fvm::div(alphacf*phid, p)
           - fvm::laplacian(alphacf*alphacf*rhocrAUcf, p)
          ==
-            fvOptions(psi, p, rhoc.name())
+            averagedSrho
+          + fvOptions(psi, p, rhoc.name())
         );
 
 //         pEqn.solve(mesh.solver(p.select(pimple.finalInnerIter())));
@@ -71,7 +72,8 @@ else
           + fvc::div(alphacf*phiHbyA)
           - fvm::laplacian(alphacf*alphacf*rhocrAUcf, p)
          ==
-            fvOptions(psi, p, rhoc.name())
+            averagedSrho
+          + fvOptions(psi, p, rhoc.name())
         );
 
 //         pEqn.solve(mesh.solver(p.select(pimple.finalInnerIter())));
