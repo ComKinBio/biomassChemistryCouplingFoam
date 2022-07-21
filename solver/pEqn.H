@@ -75,7 +75,6 @@ else
             averagedSrho
           + fvOptions(psi, p, rhoc.name())
         );
-
 //         pEqn.solve(mesh.solver(p.select(pimple.finalInnerIter())));
         pEqn.solve();
 
@@ -86,7 +85,6 @@ else
         }
     }
 }
-
 
 alphaRhoPhic = alphacf*rhocPhic;
 

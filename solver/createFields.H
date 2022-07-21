@@ -308,9 +308,8 @@ alphac = max(1.0 - bioCloud.theta(), alphacMin);
 alphac.correctBoundaryConditions();
 alphacavg.correctBoundaryConditions();
 
-
 surfaceScalarField alphacf("alphaf", fvc::interpolate(alphacavg));
-// Info<<"alphacf: "<<alphacf<<endl;
+
 surfaceScalarField rhocPhic
 (
     IOobject

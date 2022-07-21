@@ -96,7 +96,7 @@ int main(int argc, char *argv[])
         // Update continuous phase volume fraction field
         alphac = max(1.0 - bioCloud.theta(), alphacMin);
         alphac.correctBoundaryConditions();
-        
+      
         if (useTFMGas)
         {
             parcelVolumeField = bioCloud.parcelVolumeField();
@@ -110,9 +110,11 @@ int main(int argc, char *argv[])
         }
 
         bioCloud.evolve();
-        
+
+        alphacavg.correctBoundaryConditions();
         alphacf = fvc::interpolate(alphacavg);
         alphaRhoPhic = alphacf*rhocPhic;
+
 
         volScalarField::Internal averagedSrho = bioCloud.Srho();
         fvScalarMatrix averagedSrhoRho = bioCloud.Srho(rhoc);
@@ -136,22 +138,21 @@ int main(int argc, char *argv[])
             averagedShIninterFeildRef = TFM.averagedSource(averagedShIninterFeildRef);
         }
         
-        alphacavg = alphac;
+//         alphacavg = alphac;
 
         #include "rhocEqn.H"
-Info<<"alphacavg: "<<alphacavg <<endl;
         // --- Pressure-velocity PIMPLE corrector loop
         while (pimple.loop())
         {
             #include "UcEqn.H"
             #include "YEqn.H"
             #include "EEqn.H"
-Info<<"Uc: "<<Uc <<endl;
-Info<<"p: "<<p <<endl;
+// Info<<"Uc: "<<Uc <<endl;
+// Info<<"p: "<<p <<endl;
             // --- Pressure corrector loop
             while (pimple.correct())
             {
-                #include "pEqn.H"
+                #include "pEqn.H"  
             }
 
             if (pimple.turbCorr())

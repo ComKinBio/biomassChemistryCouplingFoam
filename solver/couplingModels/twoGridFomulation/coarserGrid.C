@@ -475,6 +475,7 @@ Foam::coarserGrid::coarserGrid::averagedAlphaField
             }
         }
     }
+    
 
     return averagedFieldTmp;
 }
