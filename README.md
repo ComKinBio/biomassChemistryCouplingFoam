@@ -49,7 +49,6 @@ The biomassChemistryCouplingFoam is an extended solver based on our previous dev
     <li><a href="#license">License</a></li>
     <li><a href="#Contributing">Contributing</a></li>
     <li><a href="#Contact">Contact</a></li>
-    <li><a href="#Publications">Publications</a></li>
   </ol>
 </details>
 
@@ -60,16 +59,13 @@ The biomassChemistryCouplingFoam is an extended solver based on our previous dev
 
 ### Coupling method
 
-The model details are described in the published paper [[1]](#1). The model is designed for the particle heat transfer when the particle size is much larger than the grid size.
+A two grid model is used here.
 
-
-### Colliding particle
-
-The [`basicThermoParcel`](https://github.com/ComKinBio/biomassChemistryCouplingFoam/blob/main/solver/intermediate/parcels/derived/basicThermoParcel/basicThermoParcel.H) and the [`basicThermoCloud`](https://github.com/ComKinBio/biomassChemistryCouplingFoam/blob/main/solver/intermediate/clouds/derived/basicThermoCloud/basicThermoCloud.H) are redefined to include the colliding Template layer. Since the model was aiming to calculated fixed-bed a `DEMFlag` was used to control the calculation frequency of colliding model (only the momentum colliding, the heat transfer due to contact which was embeded in the colloing model will be calculated every time step).
+The drag force is calculated differently based on the equation type. Reference paper ["Discrete particle simulation of particle–fluid flow: model formulations and their applicability"](https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/discrete-particle-simulation-of-particlefluid-flow-model-formulations-and-their-applicability/573177312329F5F2D359D18FBBD60A59).
 
 ### Solver
 
-The case used in the paper is added as a test and tutorial case for this slover.
+A single particle case is added as a test and tutorial case for this slover.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -111,15 +107,6 @@ Henrik Ström - henrik.strom@chalmers.se
 Research group: [ComKin group at NTNU](https://www.ntnu.edu/comkin/)
 
 
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-<!-- Publications -->
-## Publications
-
-If you want to use biomassChemistryCouplingFoam in your research, you should cite the following papers:
-
-* <a id="1">[1]</a> [Zhang J, Li T, Ström H, et al. A novel coupling method for unresolved CFD-DEM modeling[J]. International Journal of Heat and Mass Transfer, 2023, 203: 123817.](https://www.sciencedirect.com/science/article/pii/S0017931022012856)
- 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
